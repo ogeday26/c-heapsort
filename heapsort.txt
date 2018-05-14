@@ -1,0 +1,190 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+//www.thzbr.com Halil Safa SAĞLIK 
+namespace semih
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            int boyut = 12;
+            int[] dizi = new int[12]{0,8,9,6,3,5,7,1,4,10,2,12};
+            Random sayi = new Random();
+            for (int i = 1; i < boyut; i++)
+            {
+                
+                dizi[i] = sayi.Next(1, 49);
+            }
+
+            int takas;
+            int kontrol;
+            int kalan;
+            int adim_Sayisi;
+            int stack;
+            //////////////
+            int tasiyici = boyut-2;
+
+            //////////////
+          for (int k = 1; k < tasiyici; k++)
+            {
+                //<<<<<<<<<<<<<
+                for (int i = 1; ; i++)
+                {
+
+                    kontrol = Convert.ToInt32(Math.Pow(2, i) - 1);
+                    if (kontrol > (boyut - 1))
+                    {
+                        kontrol = Convert.ToInt32(Math.Pow(2, i - 1) - 1);
+                        kalan = (boyut - 1) - kontrol;
+                        adim_Sayisi = i - 1;
+                        break;
+                    }
+                }
+                //////////////
+                //Console.WriteLine("Bu dizi {0} adımda çözülür.\n Dizinin en son basamağında kalan sayı miktarı : {1}", adim_Sayisi, kalan);
+                int sinir;
+                //////////////
+                if ((boyut - 1) % 2 == 0)
+                {
+                    sinir = (boyut - 1) / 2;
+                }
+                else
+                {
+                    sinir = (boyut - 2) / 2;
+                }
+
+
+              //<<<<<<<<<<<<<
+                for (int i = 1; i <= sinir; i++)
+                {
+                    stack = i;
+                    if (i != sinir || kalan % 2 == 0)
+                    {
+                        if (dizi[2 * i] > dizi[(2 * i) + 1])
+                        {
+                            if (dizi[2 * i] > dizi[i])
+                            {
+                                takas = dizi[2 * i];
+                                dizi[2 * i] = dizi[i];
+                                dizi[i] = takas;
+                            }
+
+                        }
+                        else
+                        {
+                            if (dizi[(2 * i) + 1] > dizi[i])
+                            {
+                                takas = dizi[(2 * i) + 1];
+                                dizi[(2 * i) + 1] = dizi[i];
+                                dizi[i] = takas;
+                            }
+                        }
+                        
+                        while (stack != 1)
+                        {
+                            if (stack % 2 == 0)
+                            {
+                                if (dizi[stack] > dizi[stack / 2])
+                                {
+                                    takas = dizi[stack];
+                                    dizi[stack] = dizi[stack / 2];
+                                    dizi[stack / 2] = takas;
+                                    stack /= 2;
+
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                if (dizi[stack] > dizi[(stack - 1) / 2])
+                                {
+                                    takas = dizi[stack];
+                                    dizi[stack] = dizi[(stack - 1) / 2];
+                                    dizi[(stack - 1) / 2] = takas;
+                                    stack -= 1;
+                                    stack /= 2;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        while (stack != 1)
+                        {
+                            if (stack % 2 == 0)
+                            {
+                                if (dizi[stack] > dizi[stack / 2])
+                                {
+                                    takas = dizi[stack];
+                                    dizi[stack] = dizi[stack / 2];
+                                    dizi[stack / 2] = takas;
+                                    stack /= 2;
+
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                if (dizi[stack] > dizi[(stack - 1) / 2])
+                                {
+                                    takas = dizi[stack];
+                                    dizi[stack] = dizi[(stack - 1) / 2];
+                                    dizi[(stack - 1) / 2] = takas;
+                                    stack -= 1;
+                                    stack /= 2;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+
+
+
+                takas = dizi[boyut-1];
+                dizi[boyut-1] = dizi[1];
+                dizi[1] = takas;
+
+                boyut -= 1;
+                if ((boyut - 1) % 2 == 0)
+                {
+                    sinir = (boyut) / 2;
+                }
+                else
+                {
+                    sinir = (boyut - 2) / 2;
+                }
+
+               
+            }
+
+          for (int j = 1; j < 12; j++)
+          {
+              Console.WriteLine("{0}", dizi[j]);
+          }
+          Console.WriteLine("\n");
+
+          Console.Read();
+             
+        }
+    }
+}
